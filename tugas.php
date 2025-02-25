@@ -38,24 +38,32 @@
     <?php
     if (isset($_POST['jam'])) {
         $jam = $_POST['jam'];
+        
+        // Memisahkan jam dan menit dari input
         list($hour, $minute) = explode(':', $jam);
         $hour = (int)$hour;
-        if ($hour >= 0 && $hour < 4) {
-            echo "<p>$jam = Dini Hari</p>";
-        } elseif ($hour < 10) {
-            echo "<p>$jam = Pagi</p>";
-        } elseif ($hour < 15) {
-            echo "<p>$jam = Siang</p>";
-        } elseif ($hour < 17.5) {
-            echo "<p>$jam = Sore</p>";
-        } elseif ($hour < 18.5) {
-            echo "<p>$jam = Petang</p>";
-        } elseif ($hour < 24) {
-            echo "<p>$jam = Malam</p>";
+        $minute = (int)$minute;
+    
+        // Cek jika jam atau menit tidak valid
+        if ($hour < 0 || $hour > 24 || $minute < 0 || $minute > 60) {
+            echo "<p>$jam = Dunia Lain</p>";
         } else {
-            echo "<p>Dunia Lain</p>";
+            if ($hour < 4) {
+                echo "<p>$jam = Dini Hari</p>";
+            } elseif ($hour < 10) {
+                echo "<p>$jam = Pagi</p>";
+            } elseif ($hour < 15) {
+                echo "<p>$jam = Siang</p>";
+            } elseif ($hour <= 17 && $minute < 30) {
+                echo "<p>$jam = Sore</p>";
+            } elseif ($hour == 17 || $hour == 18 && $minute >= 30) {
+                echo "<p>$jam = Petang</p>";
+            } else {
+                echo "<p>$jam = Malam</p>";
+            }
         }
     }
+    
     ?>
 
 <h1>Jadwal Harian Andi</h1>
